@@ -1,4 +1,5 @@
 package com.nishant0073.student_course_management_system.Model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -7,7 +8,9 @@ public class Course {
 
     @Id
     private Long id;
+    @Column(nullable = false, unique = true,length = 255)
     private String title;
+    @Column(nullable = false)
     private int credit;
 
     public Course() {};

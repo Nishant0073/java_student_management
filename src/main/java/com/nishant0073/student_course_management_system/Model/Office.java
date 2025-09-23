@@ -1,4 +1,5 @@
 package com.nishant0073.student_course_management_system.Model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -7,7 +8,10 @@ public class Office {
 
     @Id
     private Long id;
+
+    @Column(nullable = false,unique = true)
     private Long roomNumber;
+    @Column(nullable = false, length=36)
     private String building;
 
     public Office(){};

@@ -1,6 +1,7 @@
 package com.nishant0073.student_course_management_system.Model;
 import java.util.Optional;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -9,7 +10,11 @@ public class Instructor {
 
     @Id
     private Long id;
+
+    @Column(nullable = false,length = 36)
     private String name;
+
+    @Column(nullable = false,length = 36)
     private String department;
 
     public Instructor() {
