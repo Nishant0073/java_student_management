@@ -1,14 +1,21 @@
 package com.nishant0073.student_course_management_system.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Instructor {
-
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +26,13 @@ public class Instructor {
     @Column(nullable = false,length = 36)
     private String department;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    List<Course> courses = new ArrayList<>();
+
+    @OneToOne
+    private Office office;
+
     public Instructor() {
     }
 
@@ -27,6 +41,14 @@ public class Instructor {
         this.id = id;
         this.name = name;
         this.department = department;
+    }
+
+    public Instructor(Long id,String name,String deparment,List<Course> courses){
+        super();
+        this.id = id;
+        this.name = name;
+        this.department = deparment;
+        this.courses = courses;
     }
 
     public Long getId() {
@@ -53,4 +75,11 @@ public class Instructor {
         this.department = department;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 }

@@ -1,28 +1,19 @@
 package com.nishant0073.student_course_management_system.Model.DTOs;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonView;
-import com.nishant0073.student_course_management_system.Model.Views;
-
-@JsonView(Views.Basic.class)
 public class StudentDTO {
     private Long id;    
     private String name;
     private String email;
     private int age;
-    private Set<CourseDTO> courses = new HashSet<>();
 
     public StudentDTO() {
         super();
     }
-    public StudentDTO(Long id, String name, String email, int age, Set<CourseDTO> courses) {
+    public StudentDTO(Long id, String name, String email, int age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
-        this.courses = courses;
     }
 
     public String getName() {
@@ -42,12 +33,6 @@ public class StudentDTO {
     }
     public void setAge(int age) {
         this.age = age;
-    }
-    public Set<CourseDTO> getCourses() {
-        return courses;
-    }
-    public void setCourses(Set<CourseDTO> courses) {
-        this.courses = courses;
     }
     public Long getId() {
         return id;

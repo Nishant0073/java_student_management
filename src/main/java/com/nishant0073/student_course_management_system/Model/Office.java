@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Office {
@@ -16,6 +17,9 @@ public class Office {
     private Long roomNumber;
     @Column(nullable = false, length=36)
     private String building;
+
+    @OneToOne(mappedBy="office")
+    private Instructor instructor;
 
     public Office(){};
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.nishant0073.student_course_management_system.Model.Course;
 import com.nishant0073.student_course_management_system.Model.Student;
-import com.nishant0073.student_course_management_system.Model.DTOs.CourseDTO;
 import com.nishant0073.student_course_management_system.Model.DTOs.StudentDTO;
 import com.nishant0073.student_course_management_system.Model.DTOs.StudentRequestDTO;
 import com.nishant0073.student_course_management_system.Repository.CourseRepository;
@@ -67,14 +66,10 @@ public class StudentService {
 
     private StudentDTO getStudentDTO(Student createdStudent) {
         StudentDTO studentDTO = new StudentDTO();
-        Set<CourseDTO> courseDTOs = createdStudent.getCourses().stream()
-                .map(c -> new CourseDTO(c.getId(), c.getTitle(), c.getCredit())).collect(Collectors.toSet());
-
         studentDTO.setId(createdStudent.getId());
         studentDTO.setName(createdStudent.getName());
         studentDTO.setAge(createdStudent.getAge());
         studentDTO.setEmail(createdStudent.getEmail());
-        studentDTO.setCourses(courseDTOs);
         return studentDTO;
     }
 

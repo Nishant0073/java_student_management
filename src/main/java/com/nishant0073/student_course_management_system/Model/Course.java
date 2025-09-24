@@ -2,6 +2,7 @@ package com.nishant0073.student_course_management_system.Model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -24,6 +25,7 @@ public class Course {
     private int credit;
 
     @ManyToOne
+    @JsonBackReference
     private Instructor instructor;
     
     @ManyToMany(mappedBy ="courses")
