@@ -3,12 +3,15 @@ import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Instructor {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false,length = 36)
@@ -49,11 +52,6 @@ public class Instructor {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public Optional<Instructor> findById(Long id2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
 }

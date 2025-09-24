@@ -1,13 +1,11 @@
 package com.nishant0073.student_course_management_system.Service;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.nishant0073.student_course_management_system.Model.Course;
+import com.nishant0073.student_course_management_system.Model.DTOs.CourseDTO;
+import com.nishant0073.student_course_management_system.Model.DTOs.CourseRequestDTO;
 import com.nishant0073.student_course_management_system.Repository.CourseRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -15,17 +13,25 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<Course> GetCourses() {
-        return courseRepository.findAll();
+    public List<CourseDTO> GetCourses() {
+        return courseRepository.findAll().stream().map(this::getCourseDTO).toList();
     }
 
-    public Course AddCourse(Course student) {
-        return courseRepository.save(student);
+    public CourseDTO AddCourse(CourseRequestDTO course) {
+        Course newCourse = getNewCourse(course);
+        Course createdCourse =  courseRepository.save(newCourse);
+        CourseDTO courseDTO = getCourseDTO(createdCourse);
+        return courseDTO;
     }
 
-    public Course GetCourseById(Long id) {
-        return courseRepository.findById(id)
+
+
+    public CourseDTO GetCourseById(Long id) {
+        Course course  = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course is not prsent with id:" + id));
+
+        CourseDTO courseDTO = getCourseDTO(course);
+        return courseDTO;
     }
     public void DeleteCourse(Long id){
         if(!courseRepository.existsById(id)){
@@ -34,12 +40,29 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public Course UpdateCourse(Long id, Course course) {
-        return courseRepository.findById(id).map(crs -> {
+    public CourseDTO UpdateCourse(Long id,CourseRequestDTO  course) {
+        Course createdCourse =  courseRepository.findById(id).map(crs -> {
             crs.setCredit(course.getCredit());
             crs.setTitle(course.getTitle());
             return courseRepository.save(crs);
         }).orElseThrow(() -> new RuntimeException("Course not found with this id:" + id));
+
+        CourseDTO courseDTO = getCourseDTO(createdCourse);
+        return courseDTO;
+
     }
 
+    private Course getNewCourse(CourseRequestDTO course) {
+        Course newCourse = new Course();
+        newCourse.setTitle(course.getTitle());
+        newCourse.setCredit(course.getCredit());
+        return newCourse;
+    }
+    private CourseDTO getCourseDTO(Course createdCourse) {
+        CourseDTO courseDTO = new CourseDTO();  
+        courseDTO.setId(createdCourse.getId());
+        courseDTO.setTitle(createdCourse.getTitle());
+        courseDTO.setCredit(createdCourse.getCredit());
+        return courseDTO;
+    }
 }

@@ -1,13 +1,25 @@
 package com.nishant0073.student_course_management_system.Model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Student {
 
     @Id
+    @GeneratedValue( strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 52)
@@ -17,6 +29,15 @@ public class Student {
     private String email;
 
     private int age;
+
+    @ManyToMany(fetch =  FetchType.EAGER)
+    @JoinTable(
+        name = "course_student",
+        joinColumns =  @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    @JsonManagedReference
+    private Set<Course> courses = new HashSet<>();
 
     public Student() {
     };
@@ -58,6 +79,14 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 
 }

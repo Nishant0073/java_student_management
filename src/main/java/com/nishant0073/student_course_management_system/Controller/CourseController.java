@@ -3,10 +3,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.nishant0073.student_course_management_system.Model.Course;
+import com.nishant0073.student_course_management_system.Model.DTOs.CourseRequestDTO;
 import com.nishant0073.student_course_management_system.Service.CourseService;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +25,12 @@ public class CourseController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> AddCourse(@ModelAttribute Course course) {
+    public ResponseEntity<?> AddCourse(@RequestBody CourseRequestDTO course) {
         return ResponseEntity.ok(courseService.AddCourse(course));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> UpdateCourse(@PathVariable Long id, @RequestBody  Course entity) {
+    public ResponseEntity<?> UpdateCourse(@PathVariable Long id, @RequestBody  CourseRequestDTO entity) {
         return ResponseEntity.ok(courseService.UpdateCourse(id, entity));
     }
 

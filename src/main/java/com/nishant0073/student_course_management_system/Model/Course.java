@@ -1,19 +1,36 @@
 package com.nishant0073.student_course_management_system.Model;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Course {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true,length = 255)
     private String title;
     @Column(nullable = false)
     private int credit;
+    
+    @ManyToMany(mappedBy ="courses")
+    @JsonIgnore
+    private Set<Student> students = new HashSet<>();
 
     public Course() {};
+    public Course(String title, int credit){
+        this.title = title;
+        this.credit = credit;
+    }
 
     @SuppressWarnings("unused")
     private Course(Long id, String title, int credit) {

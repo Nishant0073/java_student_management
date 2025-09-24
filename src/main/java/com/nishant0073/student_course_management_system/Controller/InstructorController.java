@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nishant0073.student_course_management_system.Model.Instructor;
+import com.nishant0073.student_course_management_system.Model.DTOs.InstructorRequestDTO;
 import com.nishant0073.student_course_management_system.Service.InstructorService;
 
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +27,12 @@ public class InstructorController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> addInstructor(@ModelAttribute Instructor instructor) {
+    public ResponseEntity<?> addInstructor(@RequestBody InstructorRequestDTO instructor) {
         return ResponseEntity.ok(instrcutorService.AddInstructor(instructor));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> UpdateInstructor(@PathVariable Long id, @RequestBody  Instructor entity) {
+    public ResponseEntity<?> UpdateInstructor(@PathVariable Long id, @RequestBody  InstructorRequestDTO entity) {
         return ResponseEntity.ok(instrcutorService.UpdateInstructor(id, entity));
     }
 

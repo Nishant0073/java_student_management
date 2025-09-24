@@ -3,8 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.nishant0073.student_course_management_system.Model.Office;
+import com.nishant0073.student_course_management_system.Model.DTOs.OfficeRequestDTO;
 import com.nishant0073.student_course_management_system.Service.OfficeService;
 
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +26,12 @@ public class OfficeController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> AddOffice(@ModelAttribute Office office) {
+    public ResponseEntity<?> AddOffice(@RequestBody OfficeRequestDTO office) {
         return ResponseEntity.ok(officeService.AddOffice(office));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> UpdateOffice(@PathVariable Long id, @RequestBody  Office entity) {
+    public ResponseEntity<?> UpdateOffice(@PathVariable Long id, @RequestBody  OfficeRequestDTO entity) {
         return ResponseEntity.ok(officeService.UpdateOffice(id, entity));
     }
 

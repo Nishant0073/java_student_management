@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nishant0073.student_course_management_system.Model.Student;
+import com.nishant0073.student_course_management_system.Model.DTOs.StudentRequestDTO;
 import com.nishant0073.student_course_management_system.Service.StudentService;
 
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +27,12 @@ public class StudentController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> addStudent(@ModelAttribute Student student) {
+    public ResponseEntity<?> addStudent(@RequestBody StudentRequestDTO student) {
         return ResponseEntity.ok(studentService.AddStudent(student));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> UpdateCustomer(@PathVariable Long id, @RequestBody  Student entity) {
+    public ResponseEntity<?> UpdateCustomer(@PathVariable Long id, @RequestBody  StudentRequestDTO entity) {
         return ResponseEntity.ok(studentService.UpdateStudent(id,entity));
     }
 
