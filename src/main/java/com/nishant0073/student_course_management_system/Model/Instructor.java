@@ -1,5 +1,4 @@
 package com.nishant0073.student_course_management_system.Model;
-import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
