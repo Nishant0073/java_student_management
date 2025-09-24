@@ -1,17 +1,12 @@
 package com.nishant0073.student_course_management_system.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nishant0073.student_course_management_system.Model.Course;
 import com.nishant0073.student_course_management_system.Model.Student;
 import com.nishant0073.student_course_management_system.Model.DTOs.StudentDTO;
 import com.nishant0073.student_course_management_system.Model.DTOs.StudentRequestDTO;
-import com.nishant0073.student_course_management_system.Repository.CourseRepository;
 import com.nishant0073.student_course_management_system.Repository.StudentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,8 +16,6 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Autowired
-    private CourseRepository courseRepository;
 
     public List<StudentDTO> GetStudents() {
         return studentRepository.findAll().stream().map((val) -> getStudentDTO(val)).toList();
@@ -75,15 +68,9 @@ public class StudentService {
 
     private Student getStudent(StudentRequestDTO student) {
         Student newStudent = new Student();
-
         newStudent.setName(student.getName());
         newStudent.setAge(student.getAge());
         newStudent.setEmail(student.getEmail());
-         Set<Course> courses = student.getCourseIds().stream()
-            .map(id -> courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found: " + id)))
-            .collect(Collectors.toSet());
-        newStudent.setCourses(courses);
         return newStudent;
     }
 }
