@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.nishant0073.student_course_management_system.Model.Views;
 import com.nishant0073.student_course_management_system.Model.DTOs.StudentRequestDTO;
 import com.nishant0073.student_course_management_system.Service.StudentService;
 
@@ -22,6 +24,7 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping("getAll")
+    @JsonView(Views.Basic.class)
     public ResponseEntity<?> GetStudents(){
         return ResponseEntity.ok(studentService.GetStudents());
     }

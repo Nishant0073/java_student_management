@@ -3,6 +3,10 @@ package com.nishant0073.student_course_management_system.Model.DTOs;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.nishant0073.student_course_management_system.Model.Views;
+
+@JsonView(Views.Basic.class)
 public class StudentDTO {
     private Long id;    
     private String name;

@@ -3,6 +3,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.nishant0073.student_course_management_system.Model.Views;
 import com.nishant0073.student_course_management_system.Model.DTOs.CourseRequestDTO;
 import com.nishant0073.student_course_management_system.Service.CourseService;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("course/")
+@JsonView(Views.Detailed.class)
 public class CourseController {
     
     @Autowired

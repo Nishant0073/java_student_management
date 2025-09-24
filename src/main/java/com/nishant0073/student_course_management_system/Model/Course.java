@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Course {
@@ -21,6 +23,9 @@ public class Course {
     private String title;
     @Column(nullable = false)
     private int credit;
+
+    @ManyToOne
+    private Instructor instructor;
     
     @ManyToMany(mappedBy ="courses")
     @JsonIgnore
@@ -63,5 +68,13 @@ public class Course {
     public void setCredit(int credit) {
         this.credit = credit;
     }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
 
 }
