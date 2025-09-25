@@ -32,10 +32,10 @@ public class StudentService {
 
     }
 
-    public StudentDTO GetStudentById(Long id) {
-        Student creaStudent = studentRepository.findById(id)
+    public Student GetStudentById(Long id) {
+        Student  student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student is not prsent with id:" + id));
-        return getStudentDTO(creaStudent);
+        return student;
     }
 
     public void DeleteStudent(Long id) {

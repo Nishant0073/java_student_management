@@ -31,10 +31,10 @@ public class InstructorService {
             return getInstructorDTO(createdInstructor);
     }
 
-    public InstructorDTO GetInstructorById(Long id) {
+    public Instructor GetInstructorById(Long id) {
         Instructor instructor =  instructorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Instructor is not prsent with id:" + id));
-        return getInstructorDTO(instructor);
+        return instructor;
     }
     public void DeleteInstructor(Long id){
         if(!instructorRepository.existsById(id)){

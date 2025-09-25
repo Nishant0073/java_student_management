@@ -27,12 +27,11 @@ public class CourseService {
 
 
 
-    public CourseDTO GetCourseById(Long id) {
+    public Course GetCourseById(Long id) {
         Course course  = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course is not prsent with id:" + id));
 
-        CourseDTO courseDTO = getCourseDTO(course);
-        return courseDTO;
+        return course;
     }
     public void DeleteCourse(Long id){
         if(!courseRepository.existsById(id)){

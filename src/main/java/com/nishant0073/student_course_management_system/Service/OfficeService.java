@@ -33,10 +33,10 @@ public class OfficeService {
 
     }
 
-    public  OfficeDTO GetOfficeById(Long id) {
+    public  Office GetOfficeById(Long id) {
         Office office =  officeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Office is not prsent with id:" + id));
-        return getOfficeDTO(office);
+        return office;
     }
     public void DeleteOffice(Long id){
         if(!officeRepository.existsById(id)){
