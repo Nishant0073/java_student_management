@@ -1,18 +1,22 @@
 package com.nishant0073.student_course_management_system.Model.DTOs;
 
+import com.nishant0073.student_course_management_system.Model.Course;
+
 public class CourseDTO {
     private Long id;
     private String title;
     private int credit;
+    private InstructorDTO instructor;
 
     public CourseDTO() {
         super();
     }
 
-    public CourseDTO(Long id, String title, int credit){
-        this.id = id;
-        this.title = title;
-        this.credit = credit;
+    public CourseDTO(Course course) {
+        this.id = course.getId();
+        this.title = course.getTitle();
+        this.credit = course.getCredit();
+        //this.instructor = course.getInstructor() != null ? course.getInstructor().toDTO() : null;
     }
 
     public Long getId() {
@@ -34,4 +38,13 @@ public class CourseDTO {
     public void setCredit(int credit) {
         this.credit = credit;
     }
+
+    public InstructorDTO getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(InstructorDTO instructor) {
+        this.instructor = instructor;
+    }
+
 }

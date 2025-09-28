@@ -15,23 +15,22 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public List<CourseDTO> GetCourses() {
-        return courseRepository.findAll().stream().map(this::getCourseDTO).toList();
+        return courseRepository.findAll().stream().map((val) -> val.toDTO()).toList();
     }
 
     public CourseDTO AddCourse(CourseRequestDTO course) {
         Course newCourse = getNewCourse(course);
         Course createdCourse =  courseRepository.save(newCourse);
-        CourseDTO courseDTO = getCourseDTO(createdCourse);
-        return courseDTO;
+        return createdCourse.toDTO();
     }
 
 
 
-    public Course GetCourseById(Long id) {
+    public CourseDTO GetCourseById(Long id) {
         Course course  = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course is not prsent with id:" + id));
 
-        return course;
+        return course.toDTO();
     }
     public void DeleteCourse(Long id){
         if(!courseRepository.existsById(id)){
@@ -47,24 +46,13 @@ public class CourseService {
         crs.setCredit(course.getCredit());
             return courseRepository.save(crs);
         }).orElseThrow(() -> new EntityNotFoundException("Course not found with this id:" + id));
-
-        CourseDTO courseDTO = getCourseDTO(createdCourse);
-        return courseDTO;
-
+        return createdCourse.toDTO();
     }
 
     private Course getNewCourse(CourseRequestDTO course) {
-
         Course newCourse = new Course();
         newCourse.setTitle(course.getTitle());
         newCourse.setCredit(course.getCredit());
         return newCourse;
-    }
-    private CourseDTO getCourseDTO(Course createdCourse) {
-        CourseDTO courseDTO = new CourseDTO();  
-        courseDTO.setId(createdCourse.getId());
-        courseDTO.setTitle(createdCourse.getTitle());
-        courseDTO.setCredit(createdCourse.getCredit());
-        return courseDTO;
     }
 }

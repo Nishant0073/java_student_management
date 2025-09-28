@@ -1,5 +1,7 @@
 package com.nishant0073.student_course_management_system.Model.DTOs;
 
+import com.nishant0073.student_course_management_system.Model.Office;
+
 public class OfficeDTO {
     private Long id;
     private Long roomNumber;
@@ -8,12 +10,11 @@ public class OfficeDTO {
     public OfficeDTO() {
         super();
     }   
-    public OfficeDTO(Long id, Long roomNumber, String building) {
-        this.id = id;
-        this.roomNumber = roomNumber;
-        this.building = building;
+    public OfficeDTO(Office office) {
+        this.id = office.getId();
+        this.roomNumber = office.getRoomNumber();
+        this.building = office.getBuilding();
     }
-
     public Long getId() {
         return id;
     }   

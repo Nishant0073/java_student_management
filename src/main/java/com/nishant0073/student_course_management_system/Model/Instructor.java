@@ -3,18 +3,21 @@ package com.nishant0073.student_course_management_system.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.nishant0073.student_course_management_system.Model.DTOs.InstructorDTO;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Instructor {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -26,12 +29,11 @@ public class Instructor {
     @Column(nullable = false,length = 36)
     private String department;
 
-     // One-to-Many with Course
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "instructor", orphanRemoval = true)
     List<Course> courses = new ArrayList<>();
 
     @OneToOne
+    @JoinColumn(referencedColumnName = "id", name = "address_id")
     private Office office;
 
     public Instructor() {
@@ -82,5 +84,9 @@ public class Instructor {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public InstructorDTO toDTO() {
+        return new InstructorDTO(this);
     }
 }

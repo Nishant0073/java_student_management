@@ -1,5 +1,6 @@
 package com.nishant0073.student_course_management_system.Model.DTOs;
 
+import com.nishant0073.student_course_management_system.Model.Instructor;
 
 public class InstructorDTO {
     private Long id;
@@ -9,12 +10,11 @@ public class InstructorDTO {
     public InstructorDTO() {
         super();
     }   
-    public InstructorDTO(Long id,String name, String department) {
-        this.id = id;
-        this.name = name;
-        this.department = department;
+    public InstructorDTO(Instructor instructor) {
+        this.id = instructor.getId();
+        this.department = instructor.getDepartment();
+        this.name = instructor.getName();
     }
-
     public String getName() {
         return name;
     }

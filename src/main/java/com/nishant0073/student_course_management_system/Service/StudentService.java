@@ -18,24 +18,21 @@ public class StudentService {
 
 
     public List<StudentDTO> GetStudents() {
-        return studentRepository.findAll().stream().map((val) -> getStudentDTO(val)).toList();
+        return studentRepository.findAll().stream().map((val) -> val.toDTO()).toList();
     }
 
     public StudentDTO AddStudent(StudentRequestDTO student) {
 
         Student newStudent = getStudent(student);
-
         Student createdStudent = studentRepository.save(newStudent);
-        StudentDTO studentDTO = getStudentDTO(createdStudent);
-
-        return studentDTO;
+        return createdStudent.toDTO();
 
     }
 
-    public Student GetStudentById(Long id) {
+    public StudentDTO GetStudentById(Long id) {
         Student  student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student is not prsent with id:" + id));
-        return student;
+        return student.toDTO();
     }
 
     public void DeleteStudent(Long id) {
@@ -53,17 +50,7 @@ public class StudentService {
             std.setAge(student.getAge());
             return studentRepository.save(std);
         }).orElseThrow(() -> new RuntimeException("Student not found with this id:" + id));
-
-        return getStudentDTO(updatedStudent);
-    }
-
-    private StudentDTO getStudentDTO(Student createdStudent) {
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setId(createdStudent.getId());
-        studentDTO.setName(createdStudent.getName());
-        studentDTO.setAge(createdStudent.getAge());
-        studentDTO.setEmail(createdStudent.getEmail());
-        return studentDTO;
+        return updatedStudent.toDTO();
     }
 
     private Student getStudent(StudentRequestDTO student) {

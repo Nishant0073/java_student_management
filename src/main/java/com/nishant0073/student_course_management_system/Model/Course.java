@@ -3,6 +3,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.nishant0073.student_course_management_system.Model.DTOs.CourseDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +18,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Course {
 
     @Id
@@ -25,11 +29,9 @@ public class Course {
     @Column(nullable = false)
     private int credit;
 
-      // Many-to-One with Instructor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     @JsonBackReference
-
     private Instructor instructor;
     
     @ManyToMany(mappedBy ="courses")
@@ -85,5 +87,9 @@ public class Course {
     }
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+    public CourseDTO toDTO()
+    {
+        return new CourseDTO(this);
     }
 }

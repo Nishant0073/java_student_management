@@ -3,7 +3,10 @@ package com.nishant0073.student_course_management_system.Model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.nishant0073.student_course_management_system.Model.DTOs.StudentDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +19,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
 public class Student {
 
     @Id
@@ -87,6 +91,10 @@ public class Student {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public StudentDTO toDTO(){
+        return new StudentDTO(this);
     }
 
 }

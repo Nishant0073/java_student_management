@@ -25,16 +25,14 @@ public class InstructorService {
     public InstructorDTO AddInstructor(InstructorRequestDTO instructor) {
 
             Instructor newInstructor = getNewInstructor(instructor);
-
             Instructor createdInstructor =  instructorRepository.save(newInstructor);
-
-            return getInstructorDTO(createdInstructor);
+            return  createdInstructor.toDTO();
     }
 
-    public Instructor GetInstructorById(Long id) {
+    public InstructorDTO GetInstructorById(Long id) {
         Instructor instructor =  instructorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Instructor is not prsent with id:" + id));
-        return instructor;
+        return instructor.toDTO();
     }
     public void DeleteInstructor(Long id){
         if(!instructorRepository.existsById(id)){
@@ -51,15 +49,7 @@ public class InstructorService {
             return instructorRepository.save(instr);
         }).orElseThrow(() -> new RuntimeException("Instructor not found with this id:" + id));
 
-        return getInstructorDTO(CreatedInstructor);
-    }
-
-    private InstructorDTO getInstructorDTO(Instructor createdInstructor) {
-        InstructorDTO instructorDTO = new InstructorDTO();
-        instructorDTO.setId(createdInstructor.getId());
-        instructorDTO.setName(createdInstructor.getName());
-        instructorDTO.setDepartment(createdInstructor.getDepartment());
-        return instructorDTO;
+        return CreatedInstructor.toDTO();
     }
 
     private Instructor getNewInstructor(InstructorRequestDTO instructor) {

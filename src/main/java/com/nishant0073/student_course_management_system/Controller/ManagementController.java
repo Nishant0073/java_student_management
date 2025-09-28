@@ -19,9 +19,15 @@ public class ManagementController {
     private  ManagementService managementService;
 
     @PutMapping("enroll/student/{studentId}/course/{courseId}")
-    public ResponseEntity<?> putMethodName(@PathVariable Long studentId, @PathVariable Long courseId) {
+    public ResponseEntity<?> enrollCourseToStudent(@PathVariable Long studentId, @PathVariable Long courseId) {
 
         return ResponseEntity.ok(managementService.enrollStudentInCourse(studentId, courseId));
+    }
+
+    @PutMapping("enroll/course/{courseId}/instructor/{instructorId}")
+    public ResponseEntity<?> enrollInstructorToCourse(@PathVariable Long courseId, @PathVariable Long instructorId) {
+
+        return ResponseEntity.ok(managementService.enrollCourseToInstructor(courseId, instructorId));
     }
     
 }

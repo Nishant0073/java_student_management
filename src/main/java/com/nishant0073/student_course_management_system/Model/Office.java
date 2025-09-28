@@ -1,4 +1,8 @@
 package com.nishant0073.student_course_management_system.Model;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.nishant0073.student_course_management_system.Model.DTOs.OfficeDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
 public class Office {
 
     @Id
@@ -18,7 +23,7 @@ public class Office {
     @Column(nullable = false, length=36)
     private String building;
 
-    @OneToOne(mappedBy="office")
+    @OneToOne(mappedBy = "office")
     private Instructor instructor;
 
     public Office(){};
@@ -49,5 +54,8 @@ public class Office {
         this.building = building;
     }
 
+    public OfficeDTO tOfficeDTO(){
+        return new OfficeDTO(this);
+    }
 
 }

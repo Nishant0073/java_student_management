@@ -1,5 +1,7 @@
 package com.nishant0073.student_course_management_system.Model.DTOs;
 
+import com.nishant0073.student_course_management_system.Model.Student;
+
 public class StudentDTO {
     private Long id;    
     private String name;
@@ -9,13 +11,13 @@ public class StudentDTO {
     public StudentDTO() {
         super();
     }
-    public StudentDTO(Long id, String name, String email, int age) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.age = age;
-    }
 
+    public StudentDTO(Student student) {
+        this.id = student.getId();
+        this.name = student.getName();
+        this.email = student.getEmail();
+        this.age = student.getAge();
+    }
     public String getName() {
         return name;
     }

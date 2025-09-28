@@ -18,7 +18,7 @@ public class OfficeService {
     private OfficeRepository officeRepository;
 
     public List<OfficeDTO> GetOffices() {
-        return officeRepository.findAll().stream().map((val) -> getOfficeDTO(val)).toList();
+        return officeRepository.findAll().stream().map((val) -> val.tOfficeDTO()).toList();
     }
 
     public OfficeDTO AddOffice(OfficeRequestDTO office) {
@@ -27,16 +27,14 @@ public class OfficeService {
 
         Office createdOffice =  officeRepository.save(newOffice);
 
-        OfficeDTO officeDTO = getOfficeDTO(createdOffice);
-
-        return officeDTO;
+        return createdOffice.tOfficeDTO();
 
     }
 
-    public  Office GetOfficeById(Long id) {
+    public OfficeDTO  GetOfficeById(Long id) {
         Office office =  officeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Office is not prsent with id:" + id));
-        return office;
+        return office.tOfficeDTO();
     }
     public void DeleteOffice(Long id){
         if(!officeRepository.existsById(id)){
@@ -48,25 +46,17 @@ public class OfficeService {
     public OfficeDTO UpdateOffice(Long id, OfficeRequestDTO office) {
 
         Office updatedOffice  = officeRepository.findById(id).map(offc-> {
-            offc.setRoomNumber(office.getRoomNumber());
-            offc.setBuilding(office.getBuilding());
+            //offc.setRoomNumber(office.getRoomNumber());
+            //offc.setBuilding(office.getBuilding());
             return officeRepository.save(offc);
         }).orElseThrow(() -> new RuntimeException("Office not found with this id:" + id));
-        return getOfficeDTO(updatedOffice);
-    }
-
-    private OfficeDTO getOfficeDTO(Office createdOffice) {
-        OfficeDTO officeDTO = new OfficeDTO();
-        officeDTO.setId(createdOffice.getId());
-        officeDTO.setBuilding(createdOffice.getBuilding());
-        officeDTO.setRoomNumber(createdOffice.getRoomNumber());
-        return officeDTO;
+        return updatedOffice.tOfficeDTO();
     }
 
     private Office getNewOffice(OfficeRequestDTO office) {
         Office newOffice = new Office();
-        newOffice.setBuilding(office.getBuilding());
-        newOffice.setRoomNumber(office.getRoomNumber());
+        // newOffice.setBuilding(office.getBuilding());
+        // newOffice.setRoomNumber(office.getRoomNumber());
         return newOffice;
     }
 
