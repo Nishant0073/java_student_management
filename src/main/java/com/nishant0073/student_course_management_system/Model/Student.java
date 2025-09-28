@@ -3,6 +3,8 @@ package com.nishant0073.student_course_management_system.Model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.BatchSize;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -41,6 +43,8 @@ public class Student {
         inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     @JsonManagedReference
+    // solves n+1 problem
+    @BatchSize(size = 20)
     private Set<Course> courses = new HashSet<>();
 
     public Student() {
