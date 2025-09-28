@@ -2,6 +2,9 @@ package com.nishant0073.student_course_management_system.Service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nishant0073.student_course_management_system.Model.Student;
@@ -36,10 +39,15 @@ public class StudentService {
     }
 
     public StudentDTO GetStudentByEmail(String email){
-        Student student = studentRepository.findStudentByEmail(email);
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<Student> studentPage = studentRepository.findStudentByEmail(email,pageable);
+        System.out.println("--- Total Pages: "+studentPage.getSize());
+        System.out.println("--- Is first page: "+studentPage.isFirst());
+        System.out.println("--- Is last page: "+studentPage.isLast());
+        List<Student> student = studentPage.getContent();
         if(student==null)
             throw new EntityNotFoundException("Student is not present with email:"+email);
-        return student.toDTO();
+        return student.get(0).toDTO();
     }
 
     public void DeleteStudent(Long id) {
