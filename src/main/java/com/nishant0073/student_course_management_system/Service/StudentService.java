@@ -31,7 +31,14 @@ public class StudentService {
 
     public StudentDTO GetStudentById(Long id) {
         Student  student = studentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Student is not prsent with id:" + id));
+                .orElseThrow(() -> new EntityNotFoundException("Student is not present with id:" + id));
+        return student.toDTO();
+    }
+
+    public StudentDTO GetStudentByEmail(String email){
+        Student student = studentRepository.findStudentByEmail(email);
+        if(student==null)
+            throw new EntityNotFoundException("Student is not present with email:"+email);
         return student.toDTO();
     }
 

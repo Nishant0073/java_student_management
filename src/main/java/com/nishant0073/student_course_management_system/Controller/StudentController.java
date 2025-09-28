@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -40,6 +43,12 @@ public class StudentController {
     public ResponseEntity<?> GetStudentById(@PathVariable Long id){
         return ResponseEntity.ok(studentService.GetStudentById(id));
     }
+
+    @GetMapping("get-email/{email}")
+    public ResponseEntity<?> GetStudentByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(studentService.GetStudentByEmail(email));
+    }
+    
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> DeleteStudentById(@PathVariable Long id){
